@@ -114,7 +114,7 @@ void cariBuku(Buku *daftarBuku, int jumlahBuku)
         printf("Judul: %s\n", daftarBuku[n].judul);
     	printf("Tahun Terbit: %d\n", daftarBuku[n].tahunTerbit);
     	printf("Penulis: %s\n", daftarBuku[n].penulis);
-    	printf("Jumlah Halaman%d\n", daftarBuku[n].halaman);
+    	printf("Jumlah Halaman: %d\n", daftarBuku[n].halaman);
     	printf("Berat Buku: %lf\n", daftarBuku[n].berat);
     	printf("ISBN: %lld\n", daftarBuku[n].isbn);
     	printf("Rating: %f\n", daftarBuku[n].rating);
@@ -130,14 +130,15 @@ void lihatDatabase(Buku *daftarBuku, int jumlahBuku)
 {
     for(int i=0; i<jumlahBuku; i++)
     {
-    	printf("%s\n", daftarBuku[i].judul);
-    	printf("%d\n", daftarBuku[i].tahunTerbit);
-    	printf("%s\n", daftarBuku[i].penulis);
-    	printf("%d\n", daftarBuku[i].halaman);
-    	printf("%lf\n", daftarBuku[i].berat);
-    	printf("%lld\n", daftarBuku[i].isbn);
-    	printf("%f\n", daftarBuku[i].rating);
-    	printf("%d\n", daftarBuku[i].dipinjam);
+    	printf("Judul: %s\n", daftarBuku[i].judul);
+    	printf("Tahun Terbit: %d\n", daftarBuku[i].tahunTerbit);
+    	printf("Penulis: %s\n", daftarBuku[i].penulis);
+    	printf("Jumlah Halaman: %d\n", daftarBuku[i].halaman);
+    	printf("Berat Buku: %lf\n", daftarBuku[i].berat);
+    	printf("ISBN: %lld\n", daftarBuku[i].isbn);
+    	printf("Rating: %f\n", daftarBuku[i].rating);
+    	printf("Dipinjam? %s\n", (daftarBuku[i].dipinjam) ? "Iya" : "Tidak");
+    	printf("-----------------------------\n");
     }
 }
 
