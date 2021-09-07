@@ -106,3 +106,13 @@ int n;
 n = binarySearch(daftarBuku, input, 0, jumlahBuku-1);
 printf ("%d\n", n);
 
+for(int i=0; i<jumlahBuku; i++){
+	printf("%s\n", daftarBuku[i].judul);
+	printf("%d\n", daftarBuku[i].tahun);
+	printf("%s\n", daftarBuku[i].penulis);
+	printf("%d\n", daftarBuku[i].halaman);
+	printf("%lf\n", daftarBuku[i].berat);
+	printf("%lld\n", daftarBuku[i].isbn);
+	printf("%f\n", daftarBuku[i].rating);
+	printf("%d\n", daftarBuku[i].dipinjam);
+} 
