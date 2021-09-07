@@ -25,10 +25,11 @@ typedef struct Riwayat
 Riwayat;
 
 // tools.c
-void cariBuku(Buku **daftarBuku, int jumlahBuku);
 void hapusBuku(Buku **daftarBuku, int *jumlahBuku);
 void tambahBuku(Buku **daftarBuku, int *jumlahBuku);
 void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat);
+void cariBuku(Buku *daftarBuku, int jumlahBuku);
+void lihatDatabase(Buku *daftarBuku, int jumlahBuku);
 
 // load.c
 int hitungBaris(char *filename);

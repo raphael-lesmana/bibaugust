@@ -100,19 +100,44 @@ void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat)
         printf("Peminjam: %s\n\n", daftarRiwayat[i].peminjam);
     }
 }
-char input[128]
-scanf("%[^\n]", input );
-int n;
-n = binarySearch(daftarBuku, input, 0, jumlahBuku-1);
-printf ("%d\n", n);
 
-for(int i=0; i<jumlahBuku; i++){
-	printf("%s\n", daftarBuku[i].judul);
-	printf("%d\n", daftarBuku[i].tahun);
-	printf("%s\n", daftarBuku[i].penulis);
-	printf("%d\n", daftarBuku[i].halaman);
-	printf("%lf\n", daftarBuku[i].berat);
-	printf("%lld\n", daftarBuku[i].isbn);
-	printf("%f\n", daftarBuku[i].rating);
-	printf("%d\n", daftarBuku[i].dipinjam);
-} 
+void cariBuku(Buku *daftarBuku, int jumlahBuku)
+{
+    char input[128];
+    printf("Masukkan judul buku yang ingin dicari: ");
+    scanf("%[^\n]", input );
+    getchar();
+    int n;
+    n = binarySearch(daftarBuku, input, 0, jumlahBuku - 1);
+    if (n != -1)
+    {
+        printf("Judul: %s\n", daftarBuku[n].judul);
+    	printf("Tahun Terbit: %d\n", daftarBuku[n].tahunTerbit);
+    	printf("Penulis: %s\n", daftarBuku[n].penulis);
+    	printf("Jumlah Halaman%d\n", daftarBuku[n].halaman);
+    	printf("Berat Buku: %lf\n", daftarBuku[n].berat);
+    	printf("ISBN: %lld\n", daftarBuku[n].isbn);
+    	printf("Rating: %f\n", daftarBuku[n].rating);
+    	printf("Dipinjam? %s\n", (daftarBuku[n].dipinjam) ? "Iya" : "Tidak");
+    }
+    else
+    {
+        printf("Buku tidak ditemukan!\n");
+    }
+}
+
+void lihatDatabase(Buku *daftarBuku, int jumlahBuku)
+{
+    for(int i=0; i<jumlahBuku; i++)
+    {
+    	printf("%s\n", daftarBuku[i].judul);
+    	printf("%d\n", daftarBuku[i].tahunTerbit);
+    	printf("%s\n", daftarBuku[i].penulis);
+    	printf("%d\n", daftarBuku[i].halaman);
+    	printf("%lf\n", daftarBuku[i].berat);
+    	printf("%lld\n", daftarBuku[i].isbn);
+    	printf("%f\n", daftarBuku[i].rating);
+    	printf("%d\n", daftarBuku[i].dipinjam);
+    }
+}
+

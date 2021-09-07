@@ -46,6 +46,7 @@ int main(void)
         switch(input)
         {
             case 1:
+                cariBuku(daftarBuku, jumlahBuku);
                 break;
             case 2:
                 break;
@@ -59,7 +60,12 @@ int main(void)
                 lihatRiwayat(daftarRiwayat, jumlahRiwayat);
                 break;
             case 6:
+                lihatDatabase(daftarBuku, jumlahBuku);
                 break;
+            case 7:
+                break;
+            default:
+                printf("Maaf, angka %i bukan pilihan valid\n", input);
         }
     }
     while (input != 7);
