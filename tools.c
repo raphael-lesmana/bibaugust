@@ -100,3 +100,9 @@ void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat)
         printf("Peminjam: %s\n\n", daftarRiwayat[i].peminjam);
     }
 }
+char input[128]
+scanf("%[^\n]", input );
+int n;
+n = binarySearch(daftarBuku, input, 0, jumlahBuku-1);
+printf ("%d\n", n);
+
