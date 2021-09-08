@@ -42,9 +42,12 @@ void hapusBuku(Buku **daftarBuku, int *jumlahBuku)
 
     fclose(dbFile);
     fclose(tmpFile);
+    remove("tmp");
 
     updateDatabase("db.txt", daftarBuku, jumlahBuku);
     printf("Buku berhasil dihapus\n");
+    printf("Tekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
 }
 
 void tambahBuku(Buku **daftarBuku, int *jumlahBuku)
@@ -89,6 +92,8 @@ void tambahBuku(Buku **daftarBuku, int *jumlahBuku)
     updateDatabase("db.txt", daftarBuku, jumlahBuku);
 
     printf("Buku Anda telah ditambahkan ke database kami!\n");
+    printf("Tekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
 }
 
 void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat)
@@ -118,11 +123,15 @@ void cariBuku(Buku *daftarBuku, int jumlahBuku)
     	printf("Berat Buku: %lf\n", daftarBuku[n].berat);
     	printf("ISBN: %lld\n", daftarBuku[n].isbn);
     	printf("Rating: %f\n", daftarBuku[n].rating);
-    	printf("Dipinjam? %s\n", (daftarBuku[n].dipinjam) ? "Iya" : "Tidak");
+    	printf("Dipinjam? %s\n\n", (daftarBuku[n].dipinjam) ? "Iya" : "Tidak");
+        printf("Tekan tombol apa saja untuk kembali ke menu\n");
+        getchar();
     }
     else
     {
         printf("Buku tidak ditemukan!\n");
+        printf("Tekan tombol apa saja untuk kembali ke menu\n");
+        getchar();
     }
 }
 
@@ -140,5 +149,8 @@ void lihatDatabase(Buku *daftarBuku, int jumlahBuku)
     	printf("Dipinjam? %s\n", (daftarBuku[i].dipinjam) ? "Iya" : "Tidak");
     	printf("-----------------------------\n");
     }
+    printf("\nTekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
 }
 
+// clear console

@@ -28,16 +28,18 @@ int main(void)
     int input;
     do
     {
+        system("clear");
         printf("-----------------------------------\n");
         printf("|            BIBAUGUST            |\n");
         printf("|                                 |\n");
         printf("| 1. Cari buku                    |\n");
         printf("| 2. Pinjam buku                  |\n");
-        printf("| 3. Tambah buku                  |\n");
-        printf("| 4. Hapus buku                   |\n");
-        printf("| 5. Riwayat peminjaman           |\n");
-        printf("| 6. Daftar buku                  |\n");
-        printf("| 7. Exit                         |\n");
+        printf("| 3. Kembalikan buku              |\n");
+        printf("| 4. Tambah buku                  |\n");
+        printf("| 5. Hapus buku                   |\n");
+        printf("| 6. Riwayat peminjaman           |\n");
+        printf("| 7. Daftar buku                  |\n");
+        printf("| 8. Exit                         |\n");
         printf("-----------------------------------\n");
         printf("Masukkan angka dari menu: ");
         scanf("%i", &input);
@@ -46,23 +48,30 @@ int main(void)
         switch(input)
         {
             case 1:
+                system("clear");
                 cariBuku(daftarBuku, jumlahBuku);
                 break;
             case 2:
                 break;
             case 3:
-                tambahBuku(&daftarBuku, &jumlahBuku);
                 break;
             case 4:
-                hapusBuku(&daftarBukuUnsorted, &jumlahBuku);
+                system("clear");
+                tambahBuku(&daftarBuku, &jumlahBuku);
                 break;
             case 5:
-                lihatRiwayat(daftarRiwayat, jumlahRiwayat);
+                system("clear");
+                hapusBuku(&daftarBukuUnsorted, &jumlahBuku);
                 break;
             case 6:
-                lihatDatabase(daftarBuku, jumlahBuku);
+                system("clear");
+                lihatRiwayat(daftarRiwayat, jumlahRiwayat);
                 break;
             case 7:
+                system("clear");
+                lihatDatabase(daftarBuku, jumlahBuku);
+                break;
+            case 8:
                 break;
             default:
                 printf("Maaf, angka %i bukan pilihan valid\n", input);
