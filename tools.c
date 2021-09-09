@@ -11,12 +11,13 @@ void hapusBuku(Buku **daftarBuku, int *jumlahBuku)
     if ((indexHapus = binarySearch(*daftarBuku, judul, 0, *jumlahBuku - 1)) == -1)
     {
         printf("Buku tidak ditemukan!\n");
-        return;
+        printf("Tekan tombol apa saja untuk kembali ke menu\n");
+        getchar();
     }
     FILE *dbFile = fopen("db.txt", "r");
     FILE *tmpFile = fopen("tmp", "w");
     int i = 0;
-    char buffer[256];
+    char buffer[512];
 
     while (fscanf(dbFile, "%[^\n]\n", buffer) != EOF)
     {
@@ -100,10 +101,14 @@ void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat)
 {
     for (int i = 0; i < jumlahRiwayat; i++)
     {
+
         printf("Tanggal: %s\n", daftarRiwayat[i].tanggal);
         printf("Judul: %s\n", daftarRiwayat[i].judul);
-        printf("Peminjam: %s\n\n", daftarRiwayat[i].peminjam);
+        printf("Peminjam: %s\n", daftarRiwayat[i].peminjam);
+        printf("Keterangan: %s\n\n", (daftarRiwayat[i].keterangan == 'P') ? "Meminjam" : "Mengembalikan" );
     }
+    printf("\nTekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
 }
 
 void cariBuku(Buku *daftarBuku, int jumlahBuku)
@@ -153,4 +158,166 @@ void lihatDatabase(Buku *daftarBuku, int jumlahBuku)
     getchar();
 }
 
-// clear console
+void kembalikanBuku(Buku **daftarBuku, int *jumlahBuku, Riwayat **daftarRiwayat, int *jumlahRiwayat)
+{
+    int indexBuku = 0;
+    char judul[128];
+
+    printf("Masukkan nama buku yang ingin dikembalikan: ");
+    scanf("%[^\n]", judul);
+    getchar();
+
+    if ((indexBuku = binarySearch(*daftarBuku, judul, 0, *jumlahBuku - 1)) == -1)
+    {
+        printf("Buku tidak ditemukan!\n");
+        return;
+    }
+
+
+    if ((*daftarBuku)[indexBuku].dipinjam != 1)
+    {
+        printf("Buku tidak sedang dipinjam!\n");
+        printf("Tekan tombol apa saja untuk kembali ke menu\n");
+        getchar();
+    }
+
+    FILE *tmpFile = fopen("tmp", "w");
+
+    for (int i = 0; i < *jumlahBuku; i++)
+    {
+        if (*jumlahBuku == indexBuku)
+        {
+            fprintf(tmpFile, "%s#%d#%s#%d#%lf#%lld#%f#0\n", (*daftarBuku)[i].judul,
+                    (*daftarBuku)[i].tahunTerbit, (*daftarBuku)[i].penulis,
+                    (*daftarBuku)[i].halaman, (*daftarBuku)[i].berat, (*daftarBuku)[i].isbn,
+                    (*daftarBuku)[i].rating);
+            continue;
+        }
+        fprintf(tmpFile, "%s#%d#%s#%d#%lf#%lld#%f#%i\n", (*daftarBuku)[i].judul,
+                (*daftarBuku)[i].tahunTerbit, (*daftarBuku)[i].penulis,
+                (*daftarBuku)[i].halaman, (*daftarBuku)[i].berat, (*daftarBuku)[i].isbn,
+                (*daftarBuku)[i].rating, (*daftarBuku)[i].dipinjam);
+    }
+
+    fclose(tmpFile);
+    tmpFile = fopen("tmp", "r");
+
+    FILE *dbFile = fopen("db.txt", "w");
+    char buffer[512];
+    while (fscanf(tmpFile, "%[^\n]\n", buffer) != EOF)
+    {
+        fprintf(dbFile, "%s\n", buffer);
+    }
+
+    fclose(tmpFile);
+    fclose(dbFile);
+    remove("tmp");
+
+    char peminjam[64];
+    printf("Nama peminjam: ");
+    scanf("%s", peminjam);
+    getchar();
+
+    time_t rawtime;
+    struct tm *info;
+    char date[80];
+
+    time(&rawtime);
+
+    info = localtime(&rawtime);
+
+    strftime(date, 80, "%Y-%m-%d", info);
+
+    FILE *histFile = fopen("history.txt", "a");
+    fprintf(histFile, "%s#%s#%s#K\n", date, judul, peminjam);
+    fclose(histFile);
+
+    updateDatabase("db.txt", daftarBuku, jumlahBuku);
+    updateRiwayat("history.txt", daftarRiwayat, jumlahRiwayat);
+
+    printf("Buku telah dikembalikan!\n");
+    printf("Tekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
+}
+
+void pinjamBuku(Buku **daftarBuku, int *jumlahBuku, Riwayat **daftarRiwayat, int *jumlahRiwayat)
+{
+    int indexBuku = 0;
+    char judul[128];
+
+    printf("Masukkan nama buku yang ingin dipinjam: ");
+    scanf("%[^\n]", judul);
+    getchar();
+
+    if ((indexBuku = binarySearch(*daftarBuku, judul, 0, *jumlahBuku - 1)) == -1)
+    {
+        printf("Buku tidak ditemukan!\n");
+        return;
+    }
+
+
+    if ((*daftarBuku)[indexBuku].dipinjam != 0)
+    {
+        printf("Buku sedang dipinjam!\n");
+        printf("Tekan tombol apa saja untuk kembali ke menu\n");
+        getchar();
+    }
+
+    FILE *tmpFile = fopen("tmp", "w");
+
+    for (int i = 0; i < *jumlahBuku; i++)
+    {
+        if (*jumlahBuku == indexBuku)
+        {
+            fprintf(tmpFile, "%s#%d#%s#%d#%lf#%lld#%f#1\n", (*daftarBuku)[i].judul,
+                    (*daftarBuku)[i].tahunTerbit, (*daftarBuku)[i].penulis,
+                    (*daftarBuku)[i].halaman, (*daftarBuku)[i].berat, (*daftarBuku)[i].isbn,
+                    (*daftarBuku)[i].rating);
+            continue;
+        }
+        fprintf(tmpFile, "%s#%d#%s#%d#%lf#%lld#%f#%i\n", (*daftarBuku)[i].judul,
+                (*daftarBuku)[i].tahunTerbit, (*daftarBuku)[i].penulis,
+                (*daftarBuku)[i].halaman, (*daftarBuku)[i].berat, (*daftarBuku)[i].isbn,
+                (*daftarBuku)[i].rating, (*daftarBuku)[i].dipinjam);
+    }
+
+    fclose(tmpFile);
+    tmpFile = fopen("tmp", "r");
+
+    FILE *dbFile = fopen("db.txt", "w");
+    char buffer[512];
+    while (fscanf(tmpFile, "%[^\n]\n", buffer) != EOF)
+    {
+        fprintf(dbFile, "%s\n", buffer);
+    }
+
+    fclose(tmpFile);
+    fclose(dbFile);
+    remove("tmp");
+
+    char peminjam[64];
+    printf("Nama peminjam: ");
+    scanf("%s", peminjam);
+    getchar();
+
+    time_t rawtime;
+    struct tm *info;
+    char date[80];
+
+    time(&rawtime);
+
+    info = localtime(&rawtime);
+
+    strftime(date, 80, "%Y-%m-%d", info);
+
+    FILE *histFile = fopen("history.txt", "a");
+    fprintf(histFile, "%s#%s#%s#P\n", date, judul, peminjam);
+    fclose(histFile);
+
+    updateDatabase("db.txt", daftarBuku, jumlahBuku);
+    updateRiwayat("history.txt", daftarRiwayat, jumlahRiwayat);
+
+    printf("Buku telah dipinjam!\n");
+    printf("Tekan tombol apa saja untuk kembali ke menu\n");
+    getchar();
+}

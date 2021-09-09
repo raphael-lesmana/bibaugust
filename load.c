@@ -58,9 +58,9 @@ void loadRiwayat(char *filename, Riwayat *daftarRiwayat, int n)
 
     for (int i = 0; i < n; i++)
     {
-        fscanf(histFile, "%[^#]#%[^#]#%[^\n]\n", daftarRiwayat[i].tanggal,
-                daftarRiwayat[i].judul,
-                daftarRiwayat[i].peminjam);
+        fscanf(histFile, "%[^#]#%[^#]#%[^#]#%c\n", daftarRiwayat[i].tanggal,
+                daftarRiwayat[i].judul, daftarRiwayat[i].peminjam,
+                &daftarRiwayat[i].keterangan);
     }
 
     fclose(histFile);
@@ -114,8 +114,8 @@ void updateRiwayat(char *filename, Riwayat **daftarRiwayat, int *jumlahRiwayat)
 
     for (int i = 0; i < jumlahTmp; i++)
     {
-        fscanf(histFile, "%[^#]#%[^#]#%[^#]\n", tmp.tanggal,
-                tmp.judul, tmp.peminjam);
+        fscanf(histFile, "%[^#]#%[^#]#%[^#]#%c\n", tmp.tanggal,
+                tmp.judul, tmp.peminjam, &tmp.keterangan);
     }
 
     fclose(histFile);

@@ -17,7 +17,6 @@ int main(void)
 
     int jumlahRiwayat = hitungBaris("history.txt");
     Riwayat *daftarRiwayat = malloc(jumlahRiwayat * sizeof(Riwayat));
-
     if (daftarRiwayat == NULL)
     {
         fprintf(stderr, "Telah terjadi kesalahan!");
@@ -26,6 +25,7 @@ int main(void)
     loadRiwayat("history.txt", daftarRiwayat, jumlahRiwayat);
 
     int input;
+    char last_message[512];
     do
     {
         system("clear");
@@ -52,8 +52,12 @@ int main(void)
                 cariBuku(daftarBuku, jumlahBuku);
                 break;
             case 2:
+                system("clear");
+                pinjamBuku(&daftarBuku, &jumlahBuku, &daftarRiwayat, &jumlahRiwayat);
                 break;
             case 3:
+                system("clear");
+                kembalikanBuku(&daftarBuku, &jumlahBuku, &daftarRiwayat, &jumlahRiwayat);
                 break;
             case 4:
                 system("clear");
@@ -77,8 +81,11 @@ int main(void)
                 printf("Maaf, angka %i bukan pilihan valid\n", input);
         }
     }
-    while (input != 7);
+    while (input != 8);
 
     free(daftarBuku);
+    free(daftarBukuUnsorted);
     free(daftarRiwayat);
+
+    return 0;
 }

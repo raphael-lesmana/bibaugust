@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct Buku
 {
@@ -21,6 +22,7 @@ typedef struct Riwayat
     char tanggal[32];
     char judul[128];
     char peminjam[64];
+    char keterangan;
 }
 Riwayat;
 
@@ -30,6 +32,8 @@ void tambahBuku(Buku **daftarBuku, int *jumlahBuku);
 void lihatRiwayat(Riwayat *daftarRiwayat, int jumlahRiwayat);
 void cariBuku(Buku *daftarBuku, int jumlahBuku);
 void lihatDatabase(Buku *daftarBuku, int jumlahBuku);
+void kembalikanBuku(Buku **daftarBuku, int *jumlahBuku, Riwayat **daftarRiwayat, int *jumlahRiwayat);
+void pinjamBuku(Buku **daftarBuku, int *jumlahBuku, Riwayat **daftarRiwayat, int *jumlahRiwayat);
 
 // load.c
 int hitungBaris(char *filename);
